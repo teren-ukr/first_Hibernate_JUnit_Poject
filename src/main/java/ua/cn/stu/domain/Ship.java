@@ -4,14 +4,14 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "shiptable")
-public class ship {
+public class Ship {
 
     //------------------------------------------------------ constructors
-    public ship(){
+    public Ship(){
 
     }
 
-    public ship(String cabin, String passenger){
+    public Ship(String cabin, String passenger){
         this.cabin = cabin;
         this.passenger = passenger;
     }
