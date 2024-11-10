@@ -5,13 +5,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import ua.cn.stu.domain.Product;
+import ua.cn.stu.domain.Ship;
 
 public class HibernateDAOFactory {
 
     //------------------------------------------------------
     private static HibernateDAOFactory instance;
-    private ProductDAO productDAO;
     private SessionFactory sessionFactory;
 
     //------------------------------------------------------
@@ -28,6 +29,7 @@ public class HibernateDAOFactory {
 
         // Додаємо анотований клас Product
         configuration.addAnnotatedClass(Product.class);
+        configuration.addAnnotatedClass(Ship.class);
 
         // Використовуємо ServiceRegistry для побудови SessionFactory
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
@@ -50,10 +52,31 @@ public class HibernateDAOFactory {
     }
 
     //------------------------------------------------------
-    public ProductDAO getProductDAO() {
-        if (productDAO == null) {
-            productDAO = new ProductDAO(getSession());
-        }
-        return productDAO;
+//    public ProductDAO getProductDAO() {
+//        if (productDAO == null) {
+//            productDAO = new ProductDAO(getSession());
+//        }
+//        return productDAO;
+//    }
+
+
+    //------------------------------------------------------
+    public <T> GenericDAO<T> getDAO(Class<T> entityClass) {
+        return new GenericDAO<>(getSession(), entityClass);
     }
+
+
+    //------------------------------------------------------
+    /**
+     * Спеціалізовані методи для отримання конкретних
+     * методів, якщо потрібні додаткові
+     **/
+    public ProductDAO getProductDAO() {
+        return new ProductDAO(getSession());
+    }
+    public ShipDAO getShipDAO() {
+        return new ShipDAO(getSession());
+    }
+
+
 }

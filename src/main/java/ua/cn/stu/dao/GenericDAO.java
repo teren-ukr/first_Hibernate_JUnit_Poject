@@ -5,6 +5,13 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
+
+/**
+ Usage Generic provide opportunities to optimize and
+do easier to create new Entity and support entities
+which was created before.
+
+**/
 public class GenericDAO<T> {
 
     //------------------------------------------------------
